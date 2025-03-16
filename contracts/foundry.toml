@@ -2,5 +2,42 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+solc = "0.8.27"
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+remappings = [
+    "@openzeppelin-upgrades/=lib/eigenlayer-middleware/lib/openzeppelin-contracts-upgradeable/",
+    "@openzeppelin/=lib/eigenlayer-middleware/lib/openzeppelin-contracts/",
+    "ds-test/=lib/eigenlayer-middleware/lib/ds-test/src/",
+    "eigenlayer-contracts/=lib/eigenlayer-middleware/lib/eigenlayer-contracts/",
+    "eigenlayer-middleware/=lib/eigenlayer-middleware/",
+    "erc4626-tests/=lib/eigenlayer-middleware/lib/openzeppelin-contracts-upgradeable/lib/erc4626-tests/",
+    "forge-std/=lib/forge-std/src/",
+    "openzeppelin-contracts-upgradeable-v4.9.0/=lib/eigenlayer-middleware/lib/eigenlayer-contracts/lib/openzeppelin-contracts-upgradeable-v4.9.0/",
+    "openzeppelin-contracts-upgradeable/=lib/eigenlayer-middleware/lib/openzeppelin-contracts-upgradeable/",
+    "openzeppelin-contracts-v4.9.0/=lib/eigenlayer-middleware/lib/eigenlayer-contracts/lib/openzeppelin-contracts-v4.9.0/",
+    "openzeppelin-contracts/=lib/eigenlayer-middleware/lib/openzeppelin-contracts/",
+    "openzeppelin/=lib/eigenlayer-middleware/lib/openzeppelin-contracts-upgradeable/contracts/",
+    "zeus-templates/=lib/eigenlayer-middleware/lib/eigenlayer-contracts/lib/zeus-templates/src/"
+]
+
+[rpc_endpoints]
+mainnet = "${MAINNET_RPC_URL}"
+holesky = "${HOLESKY_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"
+anvil = "${ANVIL_RPC_URL}"
+
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+holesky = { key = "${ETHERSCAN_API_KEY}" }
+
+[fmt]
+bracket_spacing = false
+int_types = "long"
+line_length = 100
+multiline_func_header = "params_first"
+number_underscore = "thousands"
+quote_style = "double"
+tab_width = 4
+
