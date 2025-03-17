@@ -22,8 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: contracts
           submodules: recursive
+          sparse-checkout: |
+            contracts
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
