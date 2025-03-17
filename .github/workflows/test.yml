@@ -29,7 +29,6 @@ jobs:
 
       - name: Run Forge fmt
         run: | 
-          ls -a
           forge fmt --root contracts --check
         id: fmt
 
