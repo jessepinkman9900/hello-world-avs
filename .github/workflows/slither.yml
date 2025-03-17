@@ -23,6 +23,7 @@ jobs:
           sarif: results.sarif
           fail-on: none
           target: contracts
+          slither-config: contracts/slither.config.json
           slither-args: --checklist --markdown-root ${{ github.server_url }}/${{ github.repository }}/blob/${{ github.sha }}/
 
       - name: Upload SARIF file
