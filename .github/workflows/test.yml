@@ -19,8 +19,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: recursive
-          sparse-checkout: |
-            contracts
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
@@ -30,19 +28,19 @@ jobs:
           forge --version
 
       - name: Run Forge fmt
-        run: |
+        run: | 
           ls -a
-          forge fmt --root . --check
+          forge fmt --root contracts --check
         id: fmt
 
       - name: Run Forge build
         run: |
-          forge build --sizes
+          forge build --root contracts --sizes
         id: build
 
       - name: Run Forge tests
         run: |
-          forge test -vvv --gas-report > gasreport.ansi
+          forge test --root contracts -vvv --gas-report > gasreport.ansi
         id: test
         env:
           FOUNDRY_FUZZ_SEED: 0x${{ github.event.pull_request.base.sha || github.sha }}
