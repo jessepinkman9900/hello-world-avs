@@ -34,6 +34,7 @@ import {IAVSDirectory} from "@eigenlayer/contracts/interfaces/IAVSDirectory.sol"
 import {IStrategyManager, IStrategy} from "@eigenlayer/contracts/interfaces/IStrategyManager.sol";
 import {ISlasher} from "@eigenlayer-middleware/src/interfaces/ISlasher.sol";
 import {IRewardsCoordinator} from "@eigenlayer/contracts/interfaces/IRewardsCoordinator.sol";
+import {SlashingRegistryCoordinator} from "@eigenlayer-middleware/src/SlashingRegistryCoordinator.sol";
 import {IAllocationManager} from "@eigenlayer/contracts/interfaces/IAllocationManager.sol";
 import {ISlashingRegistryCoordinatorTypes} from
   "@eigenlayer-middleware/src/interfaces/ISlashingRegistryCoordinator.sol";
@@ -323,7 +324,7 @@ contract SquaringAVSDeployer is Script, Utils {
         ITransparentUpgradeableProxy(payable(address(registryCoordinator))),
         address(registryCoordinatorImplementation),
         abi.encodeWithSelector(
-          RegistryCoordinator.initialize.selector, // todo: not intialize in registry coordinator
+          SlashingRegistryCoordinator.initialize.selector, // todo: not intialize in registry coordinator
           _squaringCommunityMultisig,
           _squaringCommunityMultisig,
           _squaringCommunityMultisig,
@@ -338,7 +339,7 @@ contract SquaringAVSDeployer is Script, Utils {
 
     // service manager implementation
     squaringServiceManagerImplementation = new SquaringServiceManager(
-      _avsDirectory, _rewardsCoordinator, registryCoordinator, stakeRegistry, squaringTaskManager
+      _avsDirectory, _rewardsCoordinator, registryCoordinator, stakeRegistry, _allocationManager, squaringTaskManager
     );
     squaringProxyAdmin.upgrade(
       ITransparentUpgradeableProxy(payable(address(squaringServiceManager))),

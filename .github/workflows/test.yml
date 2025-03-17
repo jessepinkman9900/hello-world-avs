@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          path: contracts
           submodules: recursive
 
       - name: Install Foundry
