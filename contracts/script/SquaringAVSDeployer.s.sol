@@ -34,8 +34,10 @@ import {IAVSDirectory} from "@eigenlayer/contracts/interfaces/IAVSDirectory.sol"
 import {IStrategyManager, IStrategy} from "@eigenlayer/contracts/interfaces/IStrategyManager.sol";
 import {ISlasher} from "@eigenlayer-middleware/src/interfaces/ISlasher.sol";
 import {IRewardsCoordinator} from "@eigenlayer/contracts/interfaces/IRewardsCoordinator.sol";
-import {SlashingRegistryCoordinator} from "@eigenlayer-middleware/src/SlashingRegistryCoordinator.sol";
+import {SlashingRegistryCoordinator} from
+  "@eigenlayer-middleware/src/SlashingRegistryCoordinator.sol";
 import {IAllocationManager} from "@eigenlayer/contracts/interfaces/IAllocationManager.sol";
+import {IPermissionController} from "@eigenlayer/contracts/interfaces/IPermissionController.sol";
 import {ISlashingRegistryCoordinatorTypes} from
   "@eigenlayer-middleware/src/interfaces/ISlashingRegistryCoordinator.sol";
 import {IStakeRegistryTypes} from "@eigenlayer-middleware/src/interfaces/IStakeRegistry.sol";
@@ -97,6 +99,9 @@ contract SquaringAVSDeployer is Script, Utils {
     IAllocationManager allocationManager = IAllocationManager(
       stdJson.readAddress(eigenlayerDeployedContracts, ".address.allocationManager")
     );
+    IPermissionController permissionController = IPermissionController(
+      stdJson.readAddress(eigenlayerDeployedContracts, ".address.permissionController")
+    );
 
     address squaringCommunityMultisig = msg.sender;
     address squaringPauser = msg.sender;
@@ -115,6 +120,7 @@ contract SquaringAVSDeployer is Script, Utils {
       avsDirectory,
       rewardsCoordinator,
       allocationManager,
+      permissionController,
       strategies,
       squaringCommunityMultisig,
       squaringPauser
@@ -127,6 +133,7 @@ contract SquaringAVSDeployer is Script, Utils {
     IAVSDirectory avsDirectory,
     IRewardsCoordinator rewardsCoordinator,
     IAllocationManager allocationManager,
+    IPermissionController permissionController,
     IStrategy[] memory strategies,
     address squaringCommunityMultisig,
     address squaringPauser
@@ -149,6 +156,7 @@ contract SquaringAVSDeployer is Script, Utils {
       avsDirectory,
       rewardsCoordinator,
       allocationManager,
+      permissionController,
       strategies,
       squaringCommunityMultisig,
       squaringPauserRegistry
@@ -249,6 +257,7 @@ contract SquaringAVSDeployer is Script, Utils {
     IAVSDirectory _avsDirectory,
     IRewardsCoordinator _rewardsCoordinator,
     IAllocationManager _allocationManager,
+    IPermissionController _permissionController,
     IStrategy[] memory _strategies,
     address _squaringCommunityMultisig,
     IPauserRegistry _squaringPauserRegistry
@@ -339,7 +348,13 @@ contract SquaringAVSDeployer is Script, Utils {
 
     // service manager implementation
     squaringServiceManagerImplementation = new SquaringServiceManager(
-      _avsDirectory, _rewardsCoordinator, registryCoordinator, stakeRegistry, _allocationManager, squaringTaskManager
+      _avsDirectory,
+      _rewardsCoordinator,
+      registryCoordinator,
+      stakeRegistry,
+      _permissionController,
+      _allocationManager,
+      squaringTaskManager
     );
     squaringProxyAdmin.upgrade(
       ITransparentUpgradeableProxy(payable(address(squaringServiceManager))),
@@ -347,8 +362,9 @@ contract SquaringAVSDeployer is Script, Utils {
     );
 
     // task manager implementation
-    squaringTaskManagerImplementation =
-      new SquaringTaskManager(registryCoordinator, TASK_RESPONSE_WINDOW_BLOCK);
+    squaringTaskManagerImplementation = new SquaringTaskManager(
+      registryCoordinator, TASK_RESPONSE_WINDOW_BLOCK, _squaringPauserRegistry
+    );
     squaringProxyAdmin.upgradeAndCall(
       ITransparentUpgradeableProxy(payable(address(squaringTaskManager))),
       address(squaringTaskManagerImplementation),
