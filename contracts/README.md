@@ -75,6 +75,9 @@ cast --help
 ### Deploy
 
 ```shell
+# run anvil
+anvil
+
 # deploy avs - core + middleware
 forge script script/AVSDeployer.s.sol:AVSDeployer --rpc-url $ANVIL_RPC_URL --broadcast -vvvv --interactives 1
 
