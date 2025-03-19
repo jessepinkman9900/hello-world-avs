@@ -1,0 +1,11 @@
+{
+  "squaringAvs": {
+    "operatorStateRetriever": "0xA4899D35897033b927acFCf422bc745916139776",
+    "registryCoordinator": "0x4C2F7092C2aE51D986bEFEe378e50BD4dB99C901",
+    "registryCoordinatorImplementation": "0xCace1b78160AE76398F486c8a18044da0d66d86D",
+    "squaringServiceManager": "0x1c85638e118b37167e9298c2268758e058DdfDA0",
+    "squaringServiceManagerImplementation": "0xF8e31cb472bc70500f08Cd84917E5A1912Ec8397",
+    "squaringTaskManager": "0x367761085BF3C12e5DA2Df99AC6E1a824612b8fb",
+    "squaringTaskManagerImplementation": "0xc96304e3c037f81dA488ed9dEa1D8F2a48278a75"
+  }
+}

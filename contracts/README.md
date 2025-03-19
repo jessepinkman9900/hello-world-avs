@@ -70,3 +70,10 @@ forge --help
 anvil --help
 cast --help
 ```
+
+
+### Deploy
+
+```shell
+forge script script/AVSDeployer.s.sol:AVSDeployer --rpc-url $ANVIL_RPC_URL --broadcast -vvvv --interactives 1
+```
