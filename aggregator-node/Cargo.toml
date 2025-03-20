@@ -1,0 +1,17 @@
+[package]
+name = "aggregator-node"
+description = "Aggregator node for Squaring AVS"
+version = "0.1.0"
+edition.workspace = true
+rust-version.workspace = true
+repository.workspace = true
+license-file.workspace = true
+
+[dependencies]
+eigensdk = { workspace = true }
+alloy = { workspace = true }
+eyre = { workspace = true }
+futures-util = { workspace = true }
+tokio = { workspace = true }
+log = { workspace = true }
+env_logger = { workspace = true }
